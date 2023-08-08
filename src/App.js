@@ -1,7 +1,9 @@
 import "./App.css"
+import { useState } from "react"
 var pdf_table_extractor = require("pdf-table-extractor")
 
 function App() {
+  const [credits, setCredits] = useState({})
   function handleStateChange(e) {
     e.preventDefault()
     console.log(e.target.value)
@@ -14,13 +16,17 @@ function App() {
 
     //PDF parsed
     function success(result) {
-      const ce_data = {}
+      const ce_data = { Total: [0, 0] }
 
       result.pageTables.forEach((page) => {
         page.tables.forEach((row) => {
           let topic = row[5]
           let liveHours = parseFloat(row[7])
           let homeHours = parseFloat(row[8])
+          if (!isNaN(liveHours) && !isNaN(homeHours)) {
+            ce_data.Total[0] += liveHours
+            ce_data.Total[1] += homeHours
+          }
           if (topic in ce_data) {
             let totalHours = ce_data[topic]
             totalHours[0] += liveHours
@@ -32,7 +38,7 @@ function App() {
         })
       })
 
-      console.log(JSON.stringify(ce_data))
+      setCredits(ce_data)
     }
 
     //Error
@@ -63,14 +69,16 @@ function App() {
           <tbody>
             <tr>
               <th>Credit Type</th>
-              <th>Credit Number</th>
-              <th>Requirement Met?</th>
+              <th>Live Hour</th>
+              <th>Home Hour</th>
             </tr>
-            <tr>
-              <th>Live</th>
-              <th>10</th>
-              <th>No</th>
-            </tr>
+            {Object.entries(credits).map(([k, v]) => (
+              <tr key={k}>
+                <td>{k}</td>
+                <td>{v[0]}</td>
+                <td>{v[1]}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
