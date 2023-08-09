@@ -1,6 +1,6 @@
 import "./App.css"
 import { useState } from "react"
-var pdf_table_extractor = require("pdf-table-extractor")
+import pdf_table_extractor from "./pdf-table-extractor"
 
 function App() {
   const [credits, setCredits] = useState({})
