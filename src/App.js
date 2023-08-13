@@ -1,12 +1,17 @@
 import "./App.css"
+import ceData from "./ce.json"
 import { useState } from "react"
 import pdf_table_extractor from "./pdf-table-extractor"
 
 function App() {
+  const [stateReq, setStateReq] = useState({})
   const [credits, setCredits] = useState({})
   function handleStateChange(e) {
     e.preventDefault()
-    console.log(e.target.value)
+    let state = e.target.value
+    if (state in ceData) {
+      setStateReq(ceData[state])
+    }
   }
   function handleFile(e) {
     e.preventDefault()

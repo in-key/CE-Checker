@@ -48,3 +48,11 @@ td {
   border: 1px solid black;
   border-collapse: collapse;
 }
+
+.green {
+  background-color: greenyellow;
+}
+
+.red {
+  background-color: red;
+}
