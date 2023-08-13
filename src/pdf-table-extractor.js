@@ -636,8 +636,8 @@ export function pdf_table_extractor(doc) {
   })
 }
 
-export default function pdf_table_extractor_run(pdfPath, success, error) {
-  var data = new Uint8Array(pdfPath)
+export default function pdf_table_extractor_run(pdfData, success, error) {
+  var data = new Uint8Array(pdfData)
 
   // Will be using promises to load document, pages and misc data instead of
   // callback.
